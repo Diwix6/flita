@@ -53,13 +53,11 @@ void input(int n, struct Stack *stack){
     }
 }
 
-
 void steck_conversion(struct Stack *bin_stack, struct Stack *dec_stack){
     // Function to convert a stack from binary to decimal format
     for (int i = bin_stack->top; i >= 0; i--)
         push(dec_stack, bin_to_dec(bin_stack->items[i]));
 }
-
 
 void output(struct Stack *stack) {
     // Function to output the content of the stack
