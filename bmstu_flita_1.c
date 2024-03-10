@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 100
+#define MAX_SIZE 1000
 
 struct Stack {
     int items[MAX_SIZE];
@@ -25,7 +25,7 @@ int bin_to_dec(int x){
     while(x){
         result += (x % 10) * i; // Calculate the decimal value of each binary digit
         if (x % 10 != 1 && x % 10 != 0){
-            printf("__ERROR__\nInput is not binary\n"); // If a digit is not 0 or 1, display error message and exit
+            printf("\n__ERROR__\n WRONG INPUT\n"); // If a digit is not 0 or 1, display error message and exit
             exit(0);
         }
         i *= 2;
@@ -34,6 +34,13 @@ int bin_to_dec(int x){
     return result;
 }
 
+short check(int x, struct Stack *stack){
+    for (int i = 0; i <= stack->top; i++) 
+        if (stack->items[i] == x){
+            return 0;
+        }
+    return 1;
+}
 
 void input(int n, struct Stack *stack){
     // Function to input a sequence of numbers into the stack
@@ -41,7 +48,8 @@ void input(int n, struct Stack *stack){
     int tmp;
     for (int i = 0; i < n; i++){
         scanf("%d", &tmp);
-        push(stack, tmp); // Add each number to the stack
+        if (check(tmp, stack))
+            push(stack, tmp); // Add each number to the stack
     }
 }
 
