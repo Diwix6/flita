@@ -1,0 +1,8 @@
+graphviz/
+bin/
+build/
+tests/
+CmakeLists.txt
+bmstu_flita_1.exe
+bmstu_flita_1v2.exe
+graph_cmake.exe

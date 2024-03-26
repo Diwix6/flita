@@ -36,9 +36,8 @@ int bin_to_dec(int x){
 
 short check(int x, struct Stack *stack){
     for (int i = 0; i <= stack->top; i++) 
-        if (stack->items[i] == x){
+        if (stack->items[i] == x)
             return 0;
-        }
     return 1;
 }
 

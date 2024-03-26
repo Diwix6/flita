@@ -25,13 +25,10 @@ void output(int *vec, int n){
 }
 
 int check(int *vec, int n, int x){
-    printf("checking -- ");
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < ; i++)
         if (vec[i] == x){
-            printf("0\n");
             return 0;
         }
-    printf("1\n");
     return 1;
 }
 
