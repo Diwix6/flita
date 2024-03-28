@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void get_size(int* rows, int* currentColumns, FILE *file);
+
 struct Vertex {
     int value, loop;
     struct Vertex *next;
@@ -40,7 +42,7 @@ void writeGraphToFile(int numVertices, struct Vertex **vertices) {
     for (int i = 0; i < numVertices; i++) {
         struct Vertex *currentVertex = vertices[i]->next;
         while (currentVertex != NULL) {
-            fprintf(file, "  %d -- %d;\n", i, currentVertex->value);
+            fprintf(file, "  %d -- %d;\n", i + 1, currentVertex->value + 1);
             currentVertex = currentVertex->next;
         }
     }
@@ -48,26 +50,32 @@ void writeGraphToFile(int numVertices, struct Vertex **vertices) {
     fclose(file);
 }
 
-
-int main() {
-    int numVertices, numEdges, currentColumns = 0, rows = 0, columns = 0;
-    char ch, tmp;
-    FILE *file = fopen("tests/matrix_of_incendence35.txt", "r");
-    while (!feof(file)) {
-        int value;
-        int count = fscanf(file, "%c%c", &tmp, &ch);
-        if (count > 0 && ch != '\n' && tmp != '\n') {
-            if (rows == 0) {
+void get_size(int* rows, int* currentColumns, FILE *file) {
+    int columns = 0;
+    char tmp, ch;
+    while (fscanf(file, "%c", &ch) == 1) {
+        if (ch != '\n' && ch != ' ') {
+            if (*rows == 0) {
                 columns++;
             }
-        } else {
-            rows++;
-            if (rows == 1) 
-                currentColumns = columns;
+            tmp = ch;
+        } else if (ch == '\n') {
+            if (*rows == 0) {
+                columns++; 
+            }
+            (*rows)++;
+            if (*rows == 1) {
+                *currentColumns = columns;
+            }
             columns = 0;
-        }
+        }        
     }
-    numEdges = currentColumns; numVertices = rows;
+}
+int main() {
+    int numVertices = 0, numEdges = 0;
+    char ch, tmp;
+    FILE *file = fopen(("tests/matrix_of_incendence34.txt"), "r");
+    get_size(&numVertices, &numEdges, file);
     int **matrix = (int**)malloc(numVertices * sizeof(int*));
     for (int i = 0; i < numVertices; i++) matrix[i] = (int*)malloc(numEdges * sizeof(int));
     fseek(file, 0, SEEK_SET);
